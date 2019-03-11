@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Upload {{data?.name}}'s Cover</h1>
+<div mat-dialog-content>
+  <div class="example-form">
+    <input type="file" (change)="uploadFile($event)">
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close('no')">Cancel</button>
+  <button mat-button (click)="_onSave()" cdkFocusInitial>Upload</button>
+</div>

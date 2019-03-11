@@ -1,0 +1,56 @@
+<ng-container *mobxAutorun>
+    <div class="nav-chapter">
+        <h4>Products</h4>
+        <button (click)="create()" mat-button>
+            <mat-icon>add</mat-icon>
+            <span>Add product</span>
+              </button>
+      </div>
+      <div class="data-table" *ngIf="!store.loading">
+            <table *ngIf="!store?.empty" mat-table [dataSource]="store?.data?.slice()" class="mat-elevation-z8">
+                    <ng-container matColumnDef="name">
+                      <th mat-header-cell *matHeaderCellDef>Name</th>
+                      <td mat-cell *matCellDef="let element"> 
+                        <img style="width:80px;border-radius:40px" *ngIf="element?.fileUrl" [src]="element?.fileUrl"/>
+                        {{element?.name}} 
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="price">
+                        <th mat-header-cell *matHeaderCellDef>Price</th>
+                        <td mat-cell *matCellDef="let element"> {{element?.price|currency}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="category">
+                          <th mat-header-cell *matHeaderCellDef>Category</th>
+                          <td mat-cell *matCellDef="let element"> {{element?.category?.name}} </td>
+                        </ng-container>
+          
+                      <ng-container matColumnDef="action">
+                          <th mat-header-cell *matHeaderCellDef></th>
+                          <td mat-cell *matCellDef="let element">
+                              <button mat-icon-button [matMenuTriggerFor]="menu">
+                                  <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                  <button (click)="delete(element)" mat-menu-item>
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Delete</span>
+                                  </button>
+                                  <button mat-menu-item>
+                                    <mat-icon>edit</mat-icon>
+                                    <span>Edit</span>
+                                  </button>
+                                  <button (click)="onUpdateCover(element)" mat-menu-item>
+                                    <mat-icon>cloud_upload</mat-icon>
+                                    <span>Upload</span>
+                                  </button>
+                                </mat-menu>
+                          </td>
+                        </ng-container>
+                      
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+        <div class="empty" *ngIf="store?.empty">No category</div>
+    </div>
+    <mat-spinner *ngIf="store.loading"></mat-spinner>
+</ng-container>

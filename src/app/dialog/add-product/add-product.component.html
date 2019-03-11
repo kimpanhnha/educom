@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>Add new product</h1>
+<div mat-dialog-content>
+    <form [formGroup]="form" class="example-form">
+        <mat-form-field class="formControls">
+          <input matInput placeholder="Name" [formControl]="name">
+          <mat-hint>Enter full name of category!</mat-hint>
+          <mat-error *ngIf="name.hasError('required')">
+            Name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="formControls">
+            <input matInput type="number" placeholder="Price" [formControl]="price">
+            <mat-hint>Enter selling price!</mat-hint>
+            <mat-error *ngIf="price.hasError('required')">
+              Price is <strong>required</strong>
+            </mat-error> 
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+
+                <input matInput placeholder="Select category" aria-label="State" 
+                [matAutocomplete]="auto" [formControl]="category">
+
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let state of filteredStates | async" [value]="state">
+                    <span>{{state.name}}</span></mat-option>
+                </mat-autocomplete>
+                
+              </mat-form-field>
+      </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close('no')" >Cancel</button>
+  <button mat-button (click)="_onSave(form.value)" cdkFocusInitial>Save</button>
+</div>
